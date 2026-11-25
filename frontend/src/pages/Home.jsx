@@ -40,22 +40,22 @@ const Home = () => {
     <>
       {/* SECTION A: HERO */}
       <section className="hero-grid-bg relative overflow-hidden border-b border-border/50 pb-20 pt-16 sm:pb-28 sm:pt-24 lg:pt-28">
-        {/* Subtle Animated Purple Background Aura */}
+        {/* Subtle Animated Red Background Aura */}
         <motion.div
           aria-hidden="true"
           animate={
             shouldReduceMotion
               ? undefined
-              : { scale: [1, 1.08, 1], opacity: [0.38, 0.52, 0.38] }
+              : { scale: [1, 1.08, 1], opacity: [0.35, 0.5, 0.35] }
           }
           transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-          className="pointer-events-none absolute left-1/2 top-1/3 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-600/25 blur-[110px] sm:h-[28rem] sm:w-[28rem]"
+          className="pointer-events-none absolute left-1/2 top-1/3 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-[110px] sm:h-[28rem] sm:w-[28rem]"
         />
 
         <div className="relative mx-auto flex max-w-5xl flex-col items-center px-4 text-center sm:px-6 lg:px-8">
           {/* Availability Pill */}
-          <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-purple-400/25 bg-[#130b22]/85 px-4 py-1.5 font-mono-label text-[11px] tracking-wider text-muted shadow-[0_0_24px_-6px_rgba(139,92,246,0.45)]">
-            <span className="h-2 w-2 rounded-full bg-accent-bright shadow-[0_0_8px_#a855f7]" />
+          <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-accent/35 bg-[#120b0c]/85 px-4 py-1.5 font-mono-label text-[11px] tracking-wider text-muted shadow-[0_0_22px_-6px_rgba(229,9,20,0.42)]">
+            <span className="h-2 w-2 rounded-full bg-accent-bright shadow-[0_0_8px_#ff303b]" />
             <span>{HERO_DATA.statusText}</span>
           </div>
 
@@ -67,7 +67,7 @@ const Home = () => {
             className="font-display text-6xl font-extrabold uppercase leading-[0.88] tracking-tight text-ink sm:text-7xl md:text-8xl lg:text-[7rem]"
           >
             <span className="block">{HERO_DATA.headlineLineOne}</span>
-            <span className="text-gradient-purple block">
+            <span className="text-gradient-accent block">
               {HERO_DATA.headlineLineTwo}
             </span>
           </motion.h1>
@@ -101,7 +101,7 @@ const Home = () => {
 
           {/* Scroll Indicator */}
           <div className="mt-14 hidden flex-col items-center gap-2 sm:flex">
-            <span className="h-7 w-px bg-gradient-to-b from-purple-400/60 to-transparent" />
+            <span className="h-7 w-px bg-gradient-to-b from-accent/70 to-transparent" />
             <span className="font-mono-label text-[10px] uppercase tracking-[0.28em] text-muted/70">
               Scroll
             </span>
@@ -110,11 +110,11 @@ const Home = () => {
       </section>
 
       {/* SECTION B: OUR CLIENTS */}
-      <section className="border-b border-border/50 bg-[#08050e] py-14 sm:py-16">
+      <section className="border-b border-border/50 bg-[#080808] py-14 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <MotionReveal>
             <div className="mb-8 flex flex-col items-center justify-between gap-2 text-center sm:flex-row sm:text-left">
-              <p className="font-mono-label text-xs uppercase tracking-[0.22em] text-accent-soft">
+              <p className="font-mono-label text-xs uppercase tracking-[0.22em] text-accent-bright">
                 Trusted By — Placeholder Strip
               </p>
               <p className="text-xs text-muted">
@@ -128,7 +128,7 @@ const Home = () => {
                   key={client.id}
                   className="surface-card flex flex-col items-center justify-center rounded-xl px-4 py-5 text-center"
                 >
-                  <div className="mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg border border-purple-400/25 bg-purple-600/15 text-accent-soft">
+                  <div className="mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg border border-accent/30 bg-accent/15 text-accent-bright">
                     <Sparkles size={15} />
                   </div>
                   <span className="font-display text-lg font-bold uppercase tracking-wide text-ink">
@@ -162,7 +162,7 @@ const Home = () => {
               type="button"
               onClick={openShowreelModal}
               aria-label="Play Ronak showreel preview"
-              className="surface-card group relative block aspect-video w-full overflow-hidden rounded-3xl border border-purple-500/35 text-left shadow-[0_0_60px_-15px_rgba(139,92,246,0.45)] transition-all duration-300 hover:border-purple-400/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-bright"
+              className="surface-card group relative block aspect-video w-full overflow-hidden rounded-3xl border border-accent/35 text-left shadow-[0_0_55px_-16px_rgba(229,9,20,0.34)] transition-all duration-300 hover:border-accent-bright/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-bright"
             >
               {SHOWREEL_DATA.thumbnailUrl ? (
                 <img
@@ -175,9 +175,9 @@ const Home = () => {
                 <div className="hero-grid-bg flex h-full w-full flex-col items-center justify-center p-6 text-center">
                   <Film
                     size={36}
-                    className="mb-3 text-purple-300/60 transition-transform duration-300 group-hover:scale-110"
+                    className="mb-3 text-accent-bright/70 transition-transform duration-300 group-hover:scale-110"
                   />
-                  <span className="font-mono-label text-xs uppercase tracking-[0.22em] text-accent-soft">
+                  <span className="font-mono-label text-xs uppercase tracking-[0.22em] text-accent-bright">
                     Showreel Frame Placeholder (16:9)
                   </span>
                   <span className="mt-1.5 text-xs text-muted sm:text-sm">
@@ -194,7 +194,7 @@ const Home = () => {
 
               {/* Centered Play Button */}
               <span className="absolute inset-0 flex items-center justify-center">
-                <span className="btn-purple-glow flex h-16 w-16 items-center justify-center rounded-full border border-purple-300/40 text-white transition-transform duration-300 group-hover:scale-110 sm:h-20 sm:w-20">
+                <span className="btn-accent-glow flex h-16 w-16 items-center justify-center rounded-full border border-accent-bright/45 text-white transition-transform duration-300 group-hover:scale-110 sm:h-20 sm:w-20">
                   <Play size={26} className="ml-1 fill-current" />
                 </span>
               </span>
@@ -204,7 +204,7 @@ const Home = () => {
                 <span className="font-mono-label text-[11px] uppercase tracking-[0.18em] text-ink/90">
                   Click to preview showreel modal
                 </span>
-                <span className="rounded-full border border-purple-400/30 bg-black/70 px-3 py-1 font-mono-label text-[10px] uppercase tracking-wider text-accent-soft">
+                <span className="rounded-full border border-accent/40 bg-black/75 px-3 py-1 font-mono-label text-[10px] uppercase tracking-wider text-accent-bright">
                   {SHOWREEL_DATA.durationLabel}
                 </span>
               </div>
@@ -214,7 +214,7 @@ const Home = () => {
       </section>
 
       {/* SECTION D: SELECTED REAL PROJECTS */}
-      <section className="border-t border-border/50 bg-[#090510] py-20 sm:py-28">
+      <section className="border-t border-border/50 bg-[#0d0d0d] py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <MotionReveal>
             <SectionHeader
@@ -262,7 +262,7 @@ const Home = () => {
                 <article className="surface-card surface-card-hover flex h-full flex-col justify-between rounded-2xl p-6 sm:p-7">
                   <div>
                     <div className="mb-4 flex items-center justify-between">
-                      <Quote size={20} className="text-accent-soft" />
+                      <Quote size={20} className="text-accent-bright" />
                       <span className="rounded-full border border-border bg-canvas/80 px-2.5 py-0.5 font-mono-label text-[10px] uppercase tracking-wider text-muted">
                         Placeholder
                       </span>
@@ -274,7 +274,7 @@ const Home = () => {
                   </div>
 
                   <div className="mt-6 flex items-center gap-3 border-t border-border/60 pt-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-purple-400/30 bg-purple-600/25 font-display text-lg font-bold text-accent-soft">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/35 bg-accent/20 font-display text-lg font-bold text-accent-bright">
                       {index + 1}
                     </div>
                     <div>

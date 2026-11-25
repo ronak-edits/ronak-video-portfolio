@@ -56,8 +56,8 @@ const Projects = () => {
                   onClick={() => setSelectedCategory(category)}
                   className={`rounded-full px-4 py-2 font-mono-label text-xs uppercase tracking-[0.14em] transition-all duration-200 ${
                     isSelected
-                      ? 'btn-purple-glow border border-purple-300/40 text-white'
-                      : 'border border-border bg-surface/70 text-muted hover:border-purple-400/45 hover:text-ink'
+                      ? 'btn-accent-glow border border-accent-bright/45 font-semibold text-white'
+                      : 'border border-border bg-surface/70 text-muted hover:border-accent/45 hover:text-ink'
                   }`}
                 >
                   {category}

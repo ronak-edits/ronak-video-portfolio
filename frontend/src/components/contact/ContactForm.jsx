@@ -96,16 +96,16 @@ const ContactForm = ({ initialProjectType = '' }) => {
   };
 
   const inputBaseClasses =
-    'mt-1.5 w-full rounded-xl border bg-[#120b1f] px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent';
+    'mt-1.5 w-full rounded-xl border bg-surface px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent';
 
   return (
-    <div className="relative rounded-3xl bg-paper p-6 text-slate-900 shadow-[0_24px_60px_-15px_rgba(124,58,237,0.45)] sm:p-8 lg:p-10">
+    <div className="relative rounded-3xl bg-paper p-6 text-slate-900 shadow-[0_24px_60px_-15px_rgba(178,7,16,0.34)] sm:p-8 lg:p-10">
       {/* Accent Ribbon */}
       <div className="mb-6 flex items-center justify-between gap-3">
-        <span className="font-mono-label text-[11px] font-semibold uppercase tracking-[0.2em] text-purple-800">
+        <span className="font-mono-label text-[11px] font-semibold uppercase tracking-[0.2em] text-accent-deep">
           Project Brief
         </span>
-        <span className="-rotate-2 rounded-md bg-purple-600 px-3 py-1 font-mono-label text-[10px] font-semibold uppercase tracking-[0.15em] text-white shadow-sm">
+        <span className="-rotate-2 rounded-md bg-accent-deep px-3 py-1 font-mono-label text-[10px] font-semibold uppercase tracking-[0.15em] text-white shadow-sm">
           Phase 2 UI Ready
         </span>
       </div>
@@ -117,7 +117,7 @@ const ContactForm = ({ initialProjectType = '' }) => {
             htmlFor="fullName"
             className="block font-mono-label text-xs font-semibold uppercase tracking-[0.14em] text-slate-800"
           >
-            Full Name <span className="text-purple-700">*</span>
+            Full Name <span className="text-accent-deep">*</span>
           </label>
           <input
             id="fullName"
@@ -144,7 +144,7 @@ const ContactForm = ({ initialProjectType = '' }) => {
             htmlFor="email"
             className="block font-mono-label text-xs font-semibold uppercase tracking-[0.14em] text-slate-800"
           >
-            Email <span className="text-purple-700">*</span>
+            Email <span className="text-accent-deep">*</span>
           </label>
           <input
             id="email"
@@ -172,7 +172,7 @@ const ContactForm = ({ initialProjectType = '' }) => {
               htmlFor="projectType"
               className="block font-mono-label text-xs font-semibold uppercase tracking-[0.14em] text-slate-800"
             >
-              Project Type <span className="text-purple-700">*</span>
+              Project Type <span className="text-accent-deep">*</span>
             </label>
             <select
               id="projectType"
@@ -224,7 +224,7 @@ const ContactForm = ({ initialProjectType = '' }) => {
             htmlFor="message"
             className="block font-mono-label text-xs font-semibold uppercase tracking-[0.14em] text-slate-800"
           >
-            Message <span className="text-purple-700">*</span>
+            Message <span className="text-accent-deep">*</span>
           </label>
           <textarea
             id="message"
@@ -270,7 +270,7 @@ const ContactForm = ({ initialProjectType = '' }) => {
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="btn-purple-glow inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold tracking-wide text-white transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-70"
+          className="btn-accent-glow inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold tracking-wide text-white transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-70"
         >
           {status === 'loading' ? (
             <>

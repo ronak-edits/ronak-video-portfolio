@@ -13,7 +13,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="border-t border-purple-500/20 bg-[#050308] text-sm text-muted">
+      <footer className="border-t border-accent/20 bg-[#060606] text-sm text-muted">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {/* Brand & Description */}
@@ -22,10 +22,10 @@ const Footer = () => {
                 to="/"
                 className="inline-flex items-center gap-2.5 text-ink transition-opacity hover:opacity-90"
               >
-                <span className="flex h-8 w-8 items-center justify-center rounded-full border border-purple-400/40 bg-purple-600/20 font-display text-base font-extrabold text-accent-soft">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full border border-accent/50 bg-accent/20 font-display text-base font-extrabold text-accent-bright">
                   R
                 </span>
-                <span className="font-display text-xl font-extrabold tracking-[0.12em] text-accent-soft">
+                <span className="font-display text-xl font-extrabold tracking-[0.12em] text-accent-bright">
                   {BRAND.name}
                 </span>
               </Link>
@@ -44,7 +44,7 @@ const Footer = () => {
                   <li key={link.path}>
                     <Link
                       to={link.path}
-                      className="text-sm text-muted transition-colors hover:text-accent-soft"
+                      className="text-sm text-muted transition-colors hover:text-accent-bright"
                     >
                       {link.label}
                     </Link>
@@ -62,9 +62,9 @@ const Footer = () => {
                 <li>
                   <a
                     href={`mailto:${CONTACT_PLACEHOLDERS.email}`}
-                    className="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent-soft"
+                    className="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent-bright"
                   >
-                    <Mail size={15} className="shrink-0 text-accent-soft" />
+                    <Mail size={15} className="shrink-0 text-accent-bright" />
                     <span className="break-all">{CONTACT_PLACEHOLDERS.email}</span>
                   </a>
                 </li>
@@ -85,7 +85,7 @@ const Footer = () => {
                     <li key={social.label}>
                       <a
                         href={social.href}
-                        className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-accent-soft"
+                        className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-accent-bright"
                       >
                         <ExternalLink size={13} className="shrink-0" />
                         <span>{social.label}</span>
@@ -139,7 +139,7 @@ const Footer = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-4 flex items-center justify-between">
-              <div className="inline-flex items-center gap-2 text-accent-soft">
+              <div className="inline-flex items-center gap-2 text-accent-bright">
                 <ShieldCheck size={18} />
                 <span className="font-mono-label text-xs uppercase tracking-[0.18em]">
                   Legal Placeholder

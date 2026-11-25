@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-canvas: #07040c;
-  --color-surface: #110a1d;
-  --color-surface-elevated: #190f2b;
-  --color-border: #2c1c47;
-  --color-border-glow: #6d28d9;
-  --color-ink: #f6f3ff;
-  --color-muted: #b0a3c9;
-  --color-accent: #8b5cf6;
-  --color-accent-bright: #a855f7;
-  --color-accent-soft: #c084fc;
-  --color-paper: #f6f4fb;
+  --color-canvas: #0a0a0a;
+  --color-surface: #121011;
+  --color-surface-elevated: #1a1415;
+  --color-border: #2a181b;
+  --color-border-glow: #b20710;
+  --color-ink: #ffffff;
+  --color-muted: #a1a1aa;
+  --color-accent: #e50914;
+  --color-accent-deep: #b20710;
+  --color-accent-bright: #ff303b;
+  --color-accent-soft: #ff5e66;
+  --color-paper: #fafafa;
 
   --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
@@ -43,8 +44,8 @@
     font-family: var(--font-mono);
   }
 
-  .text-gradient-purple {
-    background: linear-gradient(135deg, #c084fc 0%, #9333ea 55%, #7c3aed 100%);
+  .text-gradient-accent {
+    background: linear-gradient(135deg, #ff303b 0%, #e50914 55%, #b20710 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -53,11 +54,11 @@
   .surface-card {
     background: linear-gradient(
       165deg,
-      rgba(27, 16, 46, 0.92) 0%,
-      rgba(13, 8, 22, 0.96) 100%
+      rgba(22, 16, 17, 0.94) 0%,
+      rgba(10, 10, 10, 0.98) 100%
     );
-    border: 1px solid rgba(139, 92, 246, 0.22);
-    box-shadow: 0 0 30px -12px rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(229, 9, 20, 0.22);
+    box-shadow: 0 0 30px -12px rgba(229, 9, 20, 0.16);
   }
 
   .surface-card-hover {
@@ -65,25 +66,25 @@
   }
 
   .surface-card-hover:hover {
-    border-color: rgba(168, 85, 247, 0.52);
-    box-shadow: 0 12px 38px -12px rgba(139, 92, 246, 0.36);
+    border-color: rgba(255, 48, 59, 0.52);
+    box-shadow: 0 12px 36px -12px rgba(178, 7, 16, 0.34);
   }
 
-  .btn-purple-glow {
-    background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
-    box-shadow: 0 0 28px -4px rgba(147, 51, 234, 0.65);
+  .btn-accent-glow {
+    background: linear-gradient(135deg, #e50914 0%, #b20710 100%);
+    box-shadow: 0 0 24px -6px rgba(229, 9, 20, 0.55);
   }
 
-  .btn-purple-glow:hover {
-    background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
-    box-shadow: 0 0 34px -2px rgba(168, 85, 247, 0.8);
+  .btn-accent-glow:hover {
+    background: linear-gradient(135deg, #ff303b 0%, #e50914 100%);
+    box-shadow: 0 0 30px -4px rgba(255, 48, 59, 0.68);
   }
 
   .hero-grid-bg {
     background-image:
-      radial-gradient(circle at 50% 32%, rgba(124, 58, 237, 0.22), transparent 56%),
-      radial-gradient(circle at 20% 70%, rgba(168, 85, 247, 0.1), transparent 45%),
-      radial-gradient(rgba(192, 132, 252, 0.14) 1px, transparent 1px);
+      radial-gradient(circle at 50% 32%, rgba(229, 9, 20, 0.17), transparent 56%),
+      radial-gradient(circle at 20% 70%, rgba(178, 7, 16, 0.11), transparent 45%),
+      radial-gradient(rgba(255, 48, 59, 0.09) 1px, transparent 1px);
     background-size: 100% 100%, 100% 100%, 36px 36px;
   }
 }

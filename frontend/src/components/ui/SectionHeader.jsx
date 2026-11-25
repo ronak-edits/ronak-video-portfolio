@@ -19,7 +19,7 @@ const SectionHeader = ({
       <div className={isCentered ? 'max-w-2xl' : 'max-w-2xl'}>
         {eyebrow && (
           <div
-            className={`mb-3 inline-flex items-center gap-3 font-mono-label text-xs uppercase tracking-[0.22em] text-accent-soft ${
+            className={`mb-3 inline-flex items-center gap-3 font-mono-label text-xs uppercase tracking-[0.22em] text-accent-bright ${
               isCentered ? 'justify-center' : ''
             }`}
           >
@@ -31,7 +31,7 @@ const SectionHeader = ({
         <h2 className="font-display text-4xl font-extrabold uppercase leading-[0.95] tracking-tight text-ink sm:text-5xl lg:text-6xl">
           {title}{' '}
           {highlightedText && (
-            <span className="text-gradient-purple">{highlightedText}</span>
+            <span className="text-gradient-accent">{highlightedText}</span>
           )}
         </h2>
 

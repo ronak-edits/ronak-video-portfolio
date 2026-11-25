@@ -8,7 +8,7 @@ const ProjectCard = ({ project, onPreview }) => {
         type="button"
         onClick={() => onPreview(project)}
         aria-label={`Preview ${project.title}`}
-        className="relative aspect-video w-full overflow-hidden bg-[#120b1f] text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-bright"
+        className="relative aspect-video w-full overflow-hidden bg-[#100c0d] text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-bright"
       >
         {project.thumbnailUrl ? (
           <img
@@ -21,7 +21,7 @@ const ProjectCard = ({ project, onPreview }) => {
           <div className="hero-grid-bg flex h-full w-full flex-col items-center justify-center px-4 text-center">
             <Film
               size={28}
-              className="mb-2 text-purple-300/60 transition-transform duration-300 group-hover:scale-110"
+              className="mb-2 text-accent-bright/70 transition-transform duration-300 group-hover:scale-110"
             />
             <span className="font-mono-label text-[10px] uppercase tracking-[0.2em] text-muted">
               {project.aspectRatio || '16:9'} Video Placeholder
@@ -32,19 +32,19 @@ const ProjectCard = ({ project, onPreview }) => {
         {/* Gradient Overlay */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-[#07040c]/85 via-transparent to-black/20"
+          className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/85 via-transparent to-black/20"
         />
 
         {/* Centered Play Button */}
         <span className="absolute inset-0 flex items-center justify-center">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full border border-purple-300/40 bg-purple-600/90 text-white shadow-[0_0_24px_rgba(147,51,234,0.75)] transition-transform duration-300 group-hover:scale-110">
+          <span className="btn-accent-glow flex h-12 w-12 items-center justify-center rounded-full border border-accent-bright/45 text-white transition-transform duration-300 group-hover:scale-110">
             <Play size={18} className="ml-0.5 fill-current" />
           </span>
         </span>
 
         {/* Top-Right Duration Badge */}
         {project.duration && (
-          <span className="absolute right-3 top-3 rounded-full border border-purple-400/30 bg-black/70 px-2.5 py-0.5 font-mono-label text-[10px] tracking-wider text-ink backdrop-blur-sm">
+          <span className="absolute right-3 top-3 rounded-full border border-accent/40 bg-black/75 px-2.5 py-0.5 font-mono-label text-[10px] tracking-wider text-ink backdrop-blur-sm">
             {project.duration}
           </span>
         )}
@@ -53,7 +53,7 @@ const ProjectCard = ({ project, onPreview }) => {
       {/* Card Body */}
       <div className="flex flex-1 flex-col justify-between p-5 sm:p-6">
         <div>
-          <div className="mb-2 flex flex-wrap items-center gap-2 font-mono-label text-[11px] uppercase tracking-[0.16em] text-accent-soft">
+          <div className="mb-2 flex flex-wrap items-center gap-2 font-mono-label text-[11px] uppercase tracking-[0.16em] text-accent-bright">
             <span>{project.category}</span>
             {project.clientLabel && (
               <>
@@ -63,7 +63,7 @@ const ProjectCard = ({ project, onPreview }) => {
             )}
           </div>
 
-          <h3 className="font-display text-2xl font-bold uppercase tracking-tight text-ink transition-colors group-hover:text-accent-soft">
+          <h3 className="font-display text-2xl font-bold uppercase tracking-tight text-ink transition-colors group-hover:text-accent-bright">
             {project.title}
           </h3>
 
@@ -87,7 +87,7 @@ const ProjectCard = ({ project, onPreview }) => {
           <button
             type="button"
             onClick={() => onPreview(project)}
-            className="shrink-0 font-mono-label text-xs uppercase tracking-[0.14em] text-accent-soft transition-colors hover:text-ink"
+            className="shrink-0 font-mono-label text-xs uppercase tracking-[0.14em] text-accent-bright transition-colors hover:text-ink"
           >
             Preview &rarr;
           </button>

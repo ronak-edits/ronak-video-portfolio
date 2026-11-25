@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const VARIANT_CLASSES = {
   primary:
-    'btn-purple-glow text-white border border-purple-400/30',
+    'btn-accent-glow text-white font-semibold border border-accent-bright/40',
   secondary:
     'bg-surface/80 text-ink border border-border hover:border-accent-bright/60 hover:bg-surface-elevated',
   ghost:

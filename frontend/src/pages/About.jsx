@@ -17,7 +17,7 @@ const About = () => {
               highlightedText={ABOUT_DATA.highlightedHeadline}
             />
 
-            <p className="mt-6 rounded-xl border border-purple-500/25 bg-surface/80 px-4 py-3 font-mono-label text-xs text-accent-soft">
+            <p className="mt-6 rounded-xl border border-accent/25 bg-surface/80 px-4 py-3 font-mono-label text-xs text-accent-bright">
               {ABOUT_DATA.introPlaceholder}
             </p>
 
@@ -42,11 +42,11 @@ const About = () => {
           {/* Right Column: Portrait Image Placeholder */}
           <MotionReveal delay={0.1} className="lg:col-span-5">
             <div className="surface-card overflow-hidden rounded-3xl p-4 sm:p-5">
-              <div className="hero-grid-bg flex aspect-[4/5] w-full flex-col items-center justify-center rounded-2xl border border-purple-400/25 p-6 text-center">
-                <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-purple-400/40 bg-purple-600/20 text-accent-soft shadow-[0_0_30px_rgba(139,92,246,0.35)]">
+              <div className="hero-grid-bg flex aspect-[4/5] w-full flex-col items-center justify-center rounded-2xl border border-accent/25 p-6 text-center">
+                <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-accent/40 bg-accent/15 text-accent-bright shadow-[0_0_28px_rgba(229,9,20,0.28)]">
                   <User size={34} />
                 </div>
-                <p className="font-mono-label text-xs uppercase tracking-[0.2em] text-accent-soft">
+                <p className="font-mono-label text-xs uppercase tracking-[0.2em] text-accent-bright">
                   {ABOUT_DATA.portraitPlaceholder.label}
                 </p>
                 <p className="mt-2 max-w-xs text-xs text-muted">
@@ -64,7 +64,7 @@ const About = () => {
         <div className="mt-20 grid grid-cols-1 gap-8 lg:grid-cols-12">
           {/* Professional Experience Placeholders */}
           <MotionReveal className="lg:col-span-7">
-            <div className="mb-6 flex items-center gap-2.5 font-mono-label text-xs uppercase tracking-[0.2em] text-accent-soft">
+            <div className="mb-6 flex items-center gap-2.5 font-mono-label text-xs uppercase tracking-[0.2em] text-accent-bright">
               <Briefcase size={15} />
               <span>Professional Experience (Placeholders)</span>
             </div>
@@ -76,7 +76,7 @@ const About = () => {
                   className="surface-card surface-card-hover rounded-2xl p-6"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="font-mono-label text-xs uppercase tracking-wider text-accent-soft">
+                    <span className="font-mono-label text-xs uppercase tracking-wider text-accent-bright">
                       {item.period}
                     </span>
                     <span className="rounded-full border border-border bg-canvas/80 px-2.5 py-0.5 font-mono-label text-[10px] uppercase tracking-wider text-muted">
@@ -100,7 +100,7 @@ const About = () => {
           {/* Creative Approach & Editing Expertise */}
           <MotionReveal delay={0.1} className="space-y-6 lg:col-span-5">
             <div className="surface-card rounded-2xl p-6 sm:p-7">
-              <div className="mb-3 flex items-center gap-2 font-mono-label text-xs uppercase tracking-[0.2em] text-accent-soft">
+              <div className="mb-3 flex items-center gap-2 font-mono-label text-xs uppercase tracking-[0.2em] text-accent-bright">
                 <Sparkles size={15} />
                 <span>Creative Approach</span>
               </div>
@@ -118,7 +118,7 @@ const About = () => {
                   <li key={area.title} className="flex items-start gap-3">
                     <CheckCircle2
                       size={17}
-                      className="mt-0.5 shrink-0 text-accent-soft"
+                      className="mt-0.5 shrink-0 text-accent-bright"
                     />
                     <div>
                       <p className="text-sm font-semibold text-ink">
@@ -139,7 +139,7 @@ const About = () => {
         <MotionReveal className="mt-16">
           <div className="surface-card rounded-3xl p-6 sm:p-8">
             <div className="mb-6 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-              <div className="flex items-center gap-2.5 font-mono-label text-xs uppercase tracking-[0.2em] text-accent-soft">
+              <div className="flex items-center gap-2.5 font-mono-label text-xs uppercase tracking-[0.2em] text-accent-bright">
                 <Wrench size={15} />
                 <span>Software &amp; Tool Stack (Configurable Placeholders)</span>
               </div>
@@ -154,7 +154,7 @@ const About = () => {
                   key={tool.name}
                   className="rounded-xl border border-border bg-canvas/75 p-4"
                 >
-                  <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-accent-soft">
+                  <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-accent-bright">
                     {tool.category}
                   </p>
                   <p className="mt-1.5 text-sm font-semibold text-ink">

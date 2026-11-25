@@ -39,7 +39,7 @@ const VideoPreviewModal = ({ isOpen, onClose, item }) => {
         <div className="flex items-center justify-between border-b border-border/80 px-5 py-4 sm:px-6">
           <div>
             {item.category && (
-              <p className="font-mono-label text-[11px] uppercase tracking-[0.2em] text-accent-soft">
+              <p className="font-mono-label text-[11px] uppercase tracking-[0.2em] text-accent-bright">
                 {item.category}
               </p>
             )}
@@ -74,10 +74,10 @@ const VideoPreviewModal = ({ isOpen, onClose, item }) => {
             />
           ) : (
             <div className="hero-grid-bg flex h-full w-full flex-col items-center justify-center p-6 text-center">
-              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-accent/40 bg-surface-elevated text-accent-soft shadow-[0_0_30px_rgba(139,92,246,0.35)]">
+              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-accent/45 bg-surface-elevated text-accent-bright shadow-[0_0_28px_rgba(229,9,20,0.28)]">
                 <Film size={28} />
               </div>
-              <p className="font-mono-label text-xs uppercase tracking-[0.2em] text-accent-soft">
+              <p className="font-mono-label text-xs uppercase tracking-[0.2em] text-accent-bright">
                 Cloudinary Video Slot — Placeholder
               </p>
               <p className="mt-2 max-w-md text-sm text-muted">
@@ -99,7 +99,7 @@ const VideoPreviewModal = ({ isOpen, onClose, item }) => {
                 href={item.externalUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-accent-soft hover:text-ink"
+                className="inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-accent-bright hover:text-ink"
               >
                 <span>External Link</span>
                 <ExternalLink size={14} />

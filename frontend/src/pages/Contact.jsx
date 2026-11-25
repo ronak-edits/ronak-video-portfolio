@@ -22,7 +22,7 @@ const Contact = () => {
               subtitle="Ready to collaborate on your next video edit? Share your project brief using the form, or reach out through the placeholder channels below."
             />
 
-            <div className="mt-8 inline-flex items-center gap-2 rounded-full border border-purple-400/25 bg-surface px-4 py-1.5 font-mono-label text-[11px] text-accent-soft">
+            <div className="mt-8 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-surface px-4 py-1.5 font-mono-label text-[11px] text-accent-bright">
               <span className="h-2 w-2 rounded-full bg-accent-bright" />
               <span>{CONTACT_PLACEHOLDERS.availability}</span>
             </div>
@@ -32,7 +32,7 @@ const Contact = () => {
                 href={`mailto:${CONTACT_PLACEHOLDERS.email}`}
                 className="surface-card surface-card-hover flex items-center gap-4 rounded-2xl p-4"
               >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-purple-400/30 bg-purple-600/20 text-accent-soft">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-accent/15 text-accent-bright">
                   <Mail size={17} />
                 </span>
                 <div>
@@ -46,7 +46,7 @@ const Contact = () => {
               </a>
 
               <div className="surface-card flex items-center gap-4 rounded-2xl p-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-purple-400/30 bg-purple-600/20 text-accent-soft">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-accent/15 text-accent-bright">
                   <Phone size={17} />
                 </span>
                 <div>
@@ -60,7 +60,7 @@ const Contact = () => {
               </div>
 
               <div className="surface-card flex items-center gap-4 rounded-2xl p-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-purple-400/30 bg-purple-600/20 text-accent-soft">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-accent/15 text-accent-bright">
                   <MapPin size={17} />
                 </span>
                 <div>
@@ -84,7 +84,7 @@ const Contact = () => {
                   <a
                     key={social.label}
                     href={social.href}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-4 py-2 text-xs text-muted transition-colors hover:border-purple-400/50 hover:text-ink"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-4 py-2 text-xs text-muted transition-colors hover:border-accent/50 hover:text-ink"
                   >
                     <span>{social.label}</span>
                     <ExternalLink size={12} />

@@ -45,11 +45,11 @@ const Services = () => {
                 <article className="surface-card surface-card-hover flex h-full flex-col justify-between rounded-2xl p-6 sm:p-7">
                   <div>
                     <div className="mb-5 flex items-center justify-between">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-purple-400/30 bg-purple-600/20 text-accent-soft">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-accent/30 bg-accent/15 text-accent-bright">
                         <IconComponent size={20} />
                       </div>
                       {service.pricingLabel && (
-                        <span className="font-mono-label text-xs text-accent-soft">
+                        <span className="font-mono-label text-xs text-accent-bright">
                           {service.pricingLabel}
                         </span>
                       )}
@@ -71,7 +71,7 @@ const Services = () => {
                         >
                           <Check
                             size={14}
-                            className="mt-0.5 shrink-0 text-accent-soft"
+                            className="mt-0.5 shrink-0 text-accent-bright"
                           />
                           <span>{item}</span>
                         </li>
@@ -111,7 +111,7 @@ const Services = () => {
             {/* Horizontal connecting line on desktop */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute left-10 right-10 top-6 hidden h-px bg-gradient-to-r from-transparent via-purple-500/45 to-transparent lg:block"
+              className="pointer-events-none absolute left-10 right-10 top-6 hidden h-px bg-gradient-to-r from-transparent via-accent/45 to-transparent lg:block"
             />
 
             {PROCESS_STEPS.map((item, index) => (
@@ -120,7 +120,7 @@ const Services = () => {
                 delay={index * 0.06}
                 className="relative flex flex-col items-center text-center"
               >
-                <div className="relative z-10 mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-purple-400/45 bg-[#190f2b] font-mono-label text-xs font-semibold text-accent-soft shadow-[0_0_24px_-2px_rgba(139,92,246,0.55)]">
+                <div className="relative z-10 mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-accent/45 bg-surface-elevated font-mono-label text-xs font-semibold text-accent-bright shadow-[0_0_24px_-2px_rgba(229,9,20,0.42)]">
                   {item.step}
                 </div>
                 <h3 className="font-display text-2xl font-bold uppercase text-ink">

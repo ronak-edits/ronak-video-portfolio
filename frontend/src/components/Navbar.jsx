@@ -14,7 +14,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-40 px-4 pt-4 sm:px-6 lg:px-8">
       <nav
         aria-label="Primary Navigation"
-        className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-purple-500/25 bg-[#0e0818]/80 px-4 py-2.5 shadow-[0_8px_32px_-8px_rgba(124,58,237,0.35)] backdrop-blur-xl sm:px-6"
+        className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-accent/25 bg-[#0a0a0a]/85 px-4 py-2.5 shadow-[0_8px_32px_-8px_rgba(229,9,20,0.25)] backdrop-blur-xl sm:px-6"
       >
         {/* Left: Ronak Branding Placeholder */}
         <Link
@@ -22,10 +22,10 @@ const Navbar = () => {
           onClick={closeMobileMenu}
           className="flex items-center gap-2.5 text-ink transition-opacity hover:opacity-90"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-purple-400/40 bg-purple-600/20 font-display text-base font-extrabold tracking-wider text-accent-soft">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-accent/50 bg-accent/20 font-display text-base font-extrabold tracking-wider text-accent-bright">
             R
           </span>
-          <span className="font-display text-xl font-extrabold tracking-[0.12em] text-accent-soft">
+          <span className="font-display text-xl font-extrabold tracking-[0.12em] text-accent-bright">
             {BRAND.name}
           </span>
         </Link>
@@ -40,7 +40,7 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `rounded-full px-3.5 py-1.5 font-mono-label text-xs uppercase tracking-[0.14em] transition-all duration-200 ${
                     isActive
-                      ? 'bg-purple-500/20 text-ink shadow-[inset_0_0_0_1px_rgba(168,85,247,0.45)]'
+                      ? 'bg-accent/15 text-ink shadow-[inset_0_0_0_1px_rgba(255,48,59,0.5)]'
                       : 'text-muted hover:text-ink'
                   }`
                 }
@@ -76,7 +76,7 @@ const Navbar = () => {
 
       {/* Mobile Navigation Drawer */}
       {isMobileMenuOpen && (
-        <div className="mx-auto mt-2 max-w-6xl rounded-2xl border border-purple-500/25 bg-[#0e0818]/95 p-4 shadow-2xl backdrop-blur-xl md:hidden">
+        <div className="mx-auto mt-2 max-w-6xl rounded-2xl border border-accent/25 bg-[#0a0a0a]/95 p-4 shadow-2xl backdrop-blur-xl md:hidden">
           <ul className="flex flex-col gap-1.5">
             {NAV_LINKS.map((item) => (
               <li key={item.path}>
@@ -87,7 +87,7 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `block rounded-xl px-4 py-2.5 font-mono-label text-xs uppercase tracking-[0.15em] transition-colors ${
                       isActive
-                        ? 'bg-purple-500/20 text-ink border border-purple-400/40'
+                        ? 'border border-accent-bright/40 bg-accent/15 text-ink'
                         : 'text-muted hover:bg-surface hover:text-ink'
                     }`
                   }
