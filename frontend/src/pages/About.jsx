@@ -1,60 +1,150 @@
-import { ArrowRight, Briefcase, CheckCircle2, Sparkles, User, Wrench } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import {
+  ArrowRight,
+  Briefcase,
+  CheckCircle2,
+  ExternalLink,
+  Loader2,
+  Sparkles,
+  User,
+  Wrench,
+} from 'lucide-react';
 import Button from '../components/ui/Button';
 import MotionReveal from '../components/ui/MotionReveal';
 import SectionHeader from '../components/ui/SectionHeader';
 import { ABOUT_DATA } from '../data/aboutData';
+import { fetchProfile } from '../services/portfolioService';
 
 const About = () => {
+  const [profile, setProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    fetchProfile()
+      .then((data) => {
+        if (active) setProfile(data);
+      })
+      .catch(() => {
+        if (active) setProfile(null);
+      })
+      .finally(() => {
+        if (active) setIsLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const bioParagraphs = profile?.fullBiography
+    ? profile.fullBiography
+        .split(/\n\s*\n/)
+        .map((p) => p.trim())
+        .filter(Boolean)
+    : ABOUT_DATA.biographyParagraphs;
+
+  const experienceList =
+    profile?.experience?.length > 0
+      ? profile.experience
+      : ABOUT_DATA.experiencePlaceholders;
+
+  const skillsList =
+    profile?.editingSkills?.length > 0
+      ? profile.editingSkills
+      : ABOUT_DATA.expertiseAreas;
+
+  const toolsList =
+    profile?.softwareTools?.length > 0
+      ? profile.softwareTools
+      : ABOUT_DATA.toolsPlaceholders;
+
+  const socialEntries = profile?.socialUrls
+    ? Object.entries(profile.socialUrls).filter(([, url]) => Boolean(url))
+    : [];
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[420px] items-center justify-center py-24">
+        <Loader2 size={30} className="animate-spin text-accent-bright" />
+      </div>
+    );
+  }
+
   return (
     <div className="py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* Top Asymmetric Split: Intro + Portrait Placeholder */}
+        {/* Top Asymmetric Split: Intro + Portrait */}
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
           <MotionReveal className="lg:col-span-7">
             <SectionHeader
-              eyebrow={ABOUT_DATA.eyebrow}
+              eyebrow={profile?.professionalTitle || ABOUT_DATA.eyebrow}
               title={ABOUT_DATA.headline}
               highlightedText={ABOUT_DATA.highlightedHeadline}
             />
 
             <p className="mt-6 rounded-xl border border-accent/25 bg-surface/80 px-4 py-3 font-mono-label text-xs text-accent-bright">
-              {ABOUT_DATA.introPlaceholder}
+              {profile?.shortBio || ABOUT_DATA.introPlaceholder}
             </p>
 
             <div className="mt-6 space-y-4 text-base leading-relaxed text-muted">
-              {ABOUT_DATA.biographyParagraphs.map((paragraph, idx) => (
+              {bioParagraphs.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
 
-            {/* Dual CTAs */}
+            {socialEntries.length > 0 && (
+              <div className="mt-6 flex flex-wrap gap-2.5">
+                {socialEntries.map(([network, url]) => (
+                  <a
+                    key={network}
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3.5 py-1.5 font-mono-label text-[11px] uppercase tracking-wider text-muted transition-colors hover:border-accent/50 hover:text-ink"
+                  >
+                    <span>{network}</span>
+                    <ExternalLink size={12} />
+                  </a>
+                ))}
+              </div>
+            )}
+
             <div className="mt-8 flex flex-wrap gap-4">
               <Button to="/projects" size="lg">
                 <span>Explore Projects</span>
                 <ArrowRight size={16} />
               </Button>
               <Button to="/contact" variant="secondary" size="lg">
-                <span>Contact Ronak</span>
+                <span>Contact {profile?.name || 'Ronak'}</span>
               </Button>
             </div>
           </MotionReveal>
 
-          {/* Right Column: Portrait Image Placeholder */}
+          {/* Right Column: Portrait */}
           <MotionReveal delay={0.1} className="lg:col-span-5">
             <div className="surface-card overflow-hidden rounded-3xl p-4 sm:p-5">
-              <div className="hero-grid-bg flex aspect-[4/5] w-full flex-col items-center justify-center rounded-2xl border border-accent/25 p-6 text-center">
-                <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-accent/40 bg-accent/15 text-accent-bright shadow-[0_0_28px_rgba(229,9,20,0.28)]">
-                  <User size={34} />
+              {profile?.profileImage ? (
+                <img
+                  src={profile.profileImage}
+                  alt={profile.name || 'Ronak'}
+                  className="aspect-[4/5] w-full rounded-2xl border border-accent/25 object-cover"
+                />
+              ) : (
+                <div className="hero-grid-bg flex aspect-[4/5] w-full flex-col items-center justify-center rounded-2xl border border-accent/25 p-6 text-center">
+                  <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-accent/40 bg-accent/15 text-accent-bright shadow-[0_0_28px_rgba(229,9,20,0.28)]">
+                    <User size={34} />
+                  </div>
+                  <p className="font-mono-label text-xs uppercase tracking-[0.2em] text-accent-bright">
+                    {ABOUT_DATA.portraitPlaceholder.label}
+                  </p>
+                  <p className="mt-2 max-w-xs text-xs text-muted">
+                    Upload Ronak&apos;s portrait in the Admin Profile settings.
+                  </p>
                 </div>
-                <p className="font-mono-label text-xs uppercase tracking-[0.2em] text-accent-bright">
-                  {ABOUT_DATA.portraitPlaceholder.label}
-                </p>
-                <p className="mt-2 max-w-xs text-xs text-muted">
-                  Ready for Ronak&apos;s high-resolution Cloudinary portrait image.
-                </p>
-              </div>
+              )}
               <p className="mt-3 text-center font-mono-label text-[11px] uppercase tracking-wider text-muted">
-                {ABOUT_DATA.portraitPlaceholder.caption}
+                {profile?.name || 'Ronak'} —{' '}
+                {profile?.professionalTitle || 'Video Editor'}
               </p>
             </div>
           </MotionReveal>
@@ -62,15 +152,14 @@ const About = () => {
 
         {/* Experience & Creative Approach Asymmetric Grid */}
         <div className="mt-20 grid grid-cols-1 gap-8 lg:grid-cols-12">
-          {/* Professional Experience Placeholders */}
           <MotionReveal className="lg:col-span-7">
             <div className="mb-6 flex items-center gap-2.5 font-mono-label text-xs uppercase tracking-[0.2em] text-accent-bright">
               <Briefcase size={15} />
-              <span>Professional Experience (Placeholders)</span>
+              <span>Professional Experience</span>
             </div>
 
             <div className="space-y-4">
-              {ABOUT_DATA.experiencePlaceholders.map((item, idx) => (
+              {experienceList.map((item, idx) => (
                 <article
                   key={idx}
                   className="surface-card surface-card-hover rounded-2xl p-6"
@@ -79,15 +168,12 @@ const About = () => {
                     <span className="font-mono-label text-xs uppercase tracking-wider text-accent-bright">
                       {item.period}
                     </span>
-                    <span className="rounded-full border border-border bg-canvas/80 px-2.5 py-0.5 font-mono-label text-[10px] uppercase tracking-wider text-muted">
-                      Placeholder
-                    </span>
                   </div>
                   <h3 className="mt-2 font-display text-2xl font-bold uppercase text-ink">
                     {item.role}
                   </h3>
                   <p className="text-xs font-medium text-muted/90">
-                    {item.context}
+                    {item.company || item.context}
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-muted">
                     {item.summary}
@@ -97,7 +183,6 @@ const About = () => {
             </div>
           </MotionReveal>
 
-          {/* Creative Approach & Editing Expertise */}
           <MotionReveal delay={0.1} className="space-y-6 lg:col-span-5">
             <div className="surface-card rounded-2xl p-6 sm:p-7">
               <div className="mb-3 flex items-center gap-2 font-mono-label text-xs uppercase tracking-[0.2em] text-accent-bright">
@@ -105,7 +190,7 @@ const About = () => {
                 <span>Creative Approach</span>
               </div>
               <p className="text-sm leading-relaxed text-muted">
-                {ABOUT_DATA.creativeApproach}
+                {profile?.creativeApproach || ABOUT_DATA.creativeApproach}
               </p>
             </div>
 
@@ -114,8 +199,8 @@ const About = () => {
                 Editing Expertise
               </h3>
               <ul className="space-y-4">
-                {ABOUT_DATA.expertiseAreas.map((area) => (
-                  <li key={area.title} className="flex items-start gap-3">
+                {skillsList.map((area, idx) => (
+                  <li key={`${area.title}-${idx}`} className="flex items-start gap-3">
                     <CheckCircle2
                       size={17}
                       className="mt-0.5 shrink-0 text-accent-bright"
@@ -141,17 +226,14 @@ const About = () => {
             <div className="mb-6 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
               <div className="flex items-center gap-2.5 font-mono-label text-xs uppercase tracking-[0.2em] text-accent-bright">
                 <Wrench size={15} />
-                <span>Software &amp; Tool Stack (Configurable Placeholders)</span>
+                <span>Software &amp; Tool Stack</span>
               </div>
-              <span className="text-xs text-muted">
-                Updated with Ronak&apos;s exact software stack once confirmed
-              </span>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {ABOUT_DATA.toolsPlaceholders.map((tool) => (
+              {toolsList.map((tool, idx) => (
                 <div
-                  key={tool.name}
+                  key={`${tool.name}-${idx}`}
                   className="rounded-xl border border-border bg-canvas/75 p-4"
                 >
                   <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-accent-bright">

@@ -1,0 +1,11 @@
+/**
+ * Converts a string into a URL-friendly lowercase slug.
+ */
+export const slugify = (value = '') =>
+  String(value)
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');

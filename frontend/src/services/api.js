@@ -6,7 +6,7 @@ const API_BASE_URL =
 const api = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
-  timeout: 10000,
+  timeout: 15000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -15,11 +15,26 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    const status = error.response?.status;
+    const requestUrl = error.config?.url || '';
+
+    if (
+      status === 401 &&
+      !requestUrl.includes('/auth/login') &&
+      !requestUrl.includes('/auth/me')
+    ) {
+      window.dispatchEvent(new CustomEvent('auth:expired'));
+    }
+
     const message =
       error.response?.data?.message ||
       error.message ||
       'An unexpected network error occurred.';
-    return Promise.reject(new Error(message));
+
+    const wrappedError = new Error(message);
+    wrappedError.status = status;
+    wrappedError.errors = error.response?.data?.errors || [];
+    return Promise.reject(wrappedError);
   }
 );
 

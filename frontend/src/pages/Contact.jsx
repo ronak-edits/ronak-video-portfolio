@@ -1,25 +1,39 @@
-import { useSearchParams } from 'react-router-dom';
 import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react';
 import MotionReveal from '../components/ui/MotionReveal';
 import SectionHeader from '../components/ui/SectionHeader';
 import ContactForm from '../components/contact/ContactForm';
 import { CONTACT_PLACEHOLDERS } from '../utils/constants';
+import { useSiteSettings } from '../context/SiteContext';
+import { useSearchParams } from 'react-router-dom';
 
 const Contact = () => {
   const [searchParams] = useSearchParams();
   const initialService = searchParams.get('service') || '';
+  const { settings } = useSiteSettings();
+
+  const email = settings?.contactEmail || CONTACT_PLACEHOLDERS.email;
+  const phone = settings?.phoneNumber || CONTACT_PLACEHOLDERS.phone;
+  const location = settings?.location || CONTACT_PLACEHOLDERS.location;
+
+  const dynamicSocials = [
+    settings?.youtubeUrl && { label: 'YouTube', href: settings.youtubeUrl },
+    settings?.instagramUrl && { label: 'Instagram', href: settings.instagramUrl },
+    settings?.linkedinUrl && { label: 'LinkedIn', href: settings.linkedinUrl },
+  ].filter(Boolean);
+
+  const socialsToDisplay =
+    dynamicSocials.length > 0 ? dynamicSocials : CONTACT_PLACEHOLDERS.socials;
 
   return (
     <div className="py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-12">
-          {/* Left Column: Heading, Intro & Contact Placeholders */}
           <MotionReveal className="lg:col-span-5">
             <SectionHeader
               eyebrow="Contact"
               title="LET'S BUILD"
               highlightedText="SOMETHING."
-              subtitle="Ready to collaborate on your next video edit? Share your project brief using the form, or reach out through the placeholder channels below."
+              subtitle="Ready to collaborate on your next video edit? Share your project brief using the form, or reach out directly."
             />
 
             <div className="mt-8 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-surface px-4 py-1.5 font-mono-label text-[11px] text-accent-bright">
@@ -29,7 +43,7 @@ const Contact = () => {
 
             <div className="mt-8 space-y-4">
               <a
-                href={`mailto:${CONTACT_PLACEHOLDERS.email}`}
+                href={`mailto:${email}`}
                 className="surface-card surface-card-hover flex items-center gap-4 rounded-2xl p-4"
               >
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-accent/15 text-accent-bright">
@@ -37,11 +51,9 @@ const Contact = () => {
                 </span>
                 <div>
                   <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-muted">
-                    Email Placeholder
+                    Email
                   </p>
-                  <p className="text-sm font-medium text-ink">
-                    {CONTACT_PLACEHOLDERS.email}
-                  </p>
+                  <p className="text-sm font-medium text-ink">{email}</p>
                 </div>
               </a>
 
@@ -51,11 +63,9 @@ const Contact = () => {
                 </span>
                 <div>
                   <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-muted">
-                    Phone Placeholder
+                    Phone
                   </p>
-                  <p className="text-sm font-medium text-ink">
-                    {CONTACT_PLACEHOLDERS.phone}
-                  </p>
+                  <p className="text-sm font-medium text-ink">{phone}</p>
                 </div>
               </div>
 
@@ -65,25 +75,24 @@ const Contact = () => {
                 </span>
                 <div>
                   <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-muted">
-                    Location Placeholder
+                    Location
                   </p>
-                  <p className="text-sm font-medium text-ink">
-                    {CONTACT_PLACEHOLDERS.location}
-                  </p>
+                  <p className="text-sm font-medium text-ink">{location}</p>
                 </div>
               </div>
             </div>
 
-            {/* Social Links Placeholders */}
             <div className="mt-8">
               <p className="mb-3 font-mono-label text-[11px] uppercase tracking-[0.2em] text-muted">
-                Elsewhere (Placeholders)
+                Elsewhere
               </p>
               <div className="flex flex-wrap gap-2.5">
-                {CONTACT_PLACEHOLDERS.socials.map((social) => (
+                {socialsToDisplay.map((social) => (
                   <a
                     key={social.label}
                     href={social.href}
+                    target={social.href.startsWith('http') ? '_blank' : undefined}
+                    rel={social.href.startsWith('http') ? 'noreferrer' : undefined}
                     className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-4 py-2 text-xs text-muted transition-colors hover:border-accent/50 hover:text-ink"
                   >
                     <span>{social.label}</span>
@@ -94,7 +103,6 @@ const Contact = () => {
             </div>
           </MotionReveal>
 
-          {/* Right Column: Contrasting Light-Colored Form Card */}
           <MotionReveal delay={0.1} className="lg:col-span-7">
             <ContactForm initialProjectType={initialService} />
           </MotionReveal>

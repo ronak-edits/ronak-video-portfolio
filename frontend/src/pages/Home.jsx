@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
   ArrowRight,
   Film,
+  Loader2,
   Play,
   Quote,
   Sparkles,
@@ -11,28 +12,71 @@ import Button from '../components/ui/Button';
 import MotionReveal from '../components/ui/MotionReveal';
 import SectionHeader from '../components/ui/SectionHeader';
 import VideoPreviewModal from '../components/ui/VideoPreviewModal';
-import ProjectCard from '../components/projects/ProjectCard';
+import ProjectCarousel3D from '../components/projects/ProjectCarousel3D';
 import {
   CLIENT_PLACEHOLDERS,
   CLIENT_REVIEWS_PLACEHOLDERS,
   HERO_DATA,
   SHOWREEL_DATA,
 } from '../data/homeData';
-import { PROJECTS_DATA } from '../data/projectsData';
+import { useSiteSettings } from '../context/SiteContext';
+import { fetchPublicProjects } from '../services/portfolioService';
 
 const Home = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { settings } = useSiteSettings();
   const [activeVideoItem, setActiveVideoItem] = useState(null);
+  const [featuredProjects, setFeaturedProjects] = useState([]);
+  const [isLoadingProjects, setIsLoadingProjects] = useState(true);
 
-  const featuredProjects = PROJECTS_DATA.filter((project) => project.featured);
+  useEffect(() => {
+    let active = true;
+    const loadSelectedProjects = async () => {
+      setIsLoadingProjects(true);
+      try {
+        let projects = await fetchPublicProjects({ featured: true });
+        if (projects.length === 0) {
+          const published = await fetchPublicProjects();
+          projects = published.slice(0, 4);
+        }
+        if (active) setFeaturedProjects(projects);
+      } catch {
+        if (active) setFeaturedProjects([]);
+      } finally {
+        if (active) setIsLoadingProjects(false);
+      }
+    };
+    loadSelectedProjects();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const showreelVideoUrl =
+    settings?.showreelVideoUrl || SHOWREEL_DATA.videoUrl;
+  const showreelThumbnailUrl =
+    settings?.showreelThumbnailUrl || SHOWREEL_DATA.thumbnailUrl;
 
   const openShowreelModal = () => {
     setActiveVideoItem({
       title: SHOWREEL_DATA.modalTitle,
       category: 'Showreel',
-      videoUrl: SHOWREEL_DATA.videoUrl,
-      thumbnailUrl: SHOWREEL_DATA.thumbnailUrl,
+      videoUrl: showreelVideoUrl,
+      thumbnailUrl: showreelThumbnailUrl,
       description: SHOWREEL_DATA.modalDescription,
+    });
+  };
+
+  const openProjectModal = (selected) => {
+    setActiveVideoItem({
+      title: selected.title,
+      category:
+        typeof selected.category === 'object'
+          ? selected.category?.name
+          : selected.category,
+      videoUrl: selected.videoUrl,
+      thumbnailUrl: selected.thumbnailUrl,
+      description: selected.fullDescription || selected.shortDescription,
     });
   };
 
@@ -40,7 +84,6 @@ const Home = () => {
     <>
       {/* SECTION A: HERO */}
       <section className="hero-grid-bg relative overflow-hidden border-b border-border/50 pb-20 pt-16 sm:pb-28 sm:pt-24 lg:pt-28">
-        {/* Subtle Animated Red Background Aura */}
         <motion.div
           aria-hidden="true"
           animate={
@@ -53,13 +96,11 @@ const Home = () => {
         />
 
         <div className="relative mx-auto flex max-w-5xl flex-col items-center px-4 text-center sm:px-6 lg:px-8">
-          {/* Availability Pill */}
           <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-accent/35 bg-[#120b0c]/85 px-4 py-1.5 font-mono-label text-[11px] tracking-wider text-muted shadow-[0_0_22px_-6px_rgba(229,9,20,0.42)]">
             <span className="h-2 w-2 rounded-full bg-accent-bright shadow-[0_0_8px_#ff303b]" />
             <span>{HERO_DATA.statusText}</span>
           </div>
 
-          {/* Large Bold Condensed Headline */}
           <motion.h1
             initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -72,18 +113,12 @@ const Home = () => {
             </span>
           </motion.h1>
 
-          {/* Short Intro */}
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
             {HERO_DATA.subtitle}
           </p>
 
-          {/* Hero CTAs */}
           <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-            <Button
-              href="#showreel"
-              size="lg"
-              className="min-w-[180px]"
-            >
+            <Button href="#showreel" size="lg" className="min-w-[180px]">
               <Play size={16} className="fill-current" />
               <span>{HERO_DATA.primaryCta}</span>
             </Button>
@@ -99,7 +134,6 @@ const Home = () => {
             </Button>
           </div>
 
-          {/* Scroll Indicator */}
           <div className="mt-14 hidden flex-col items-center gap-2 sm:flex">
             <span className="h-7 w-px bg-gradient-to-b from-accent/70 to-transparent" />
             <span className="font-mono-label text-[10px] uppercase tracking-[0.28em] text-muted/70">
@@ -164,9 +198,9 @@ const Home = () => {
               aria-label="Play Ronak showreel preview"
               className="surface-card group relative block aspect-video w-full overflow-hidden rounded-3xl border border-accent/35 text-left shadow-[0_0_55px_-16px_rgba(229,9,20,0.34)] transition-all duration-300 hover:border-accent-bright/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-bright"
             >
-              {SHOWREEL_DATA.thumbnailUrl ? (
+              {showreelThumbnailUrl ? (
                 <img
-                  src={SHOWREEL_DATA.thumbnailUrl}
+                  src={showreelThumbnailUrl}
                   alt="Ronak Showreel Thumbnail"
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -181,31 +215,32 @@ const Home = () => {
                     Showreel Frame Placeholder (16:9)
                   </span>
                   <span className="mt-1.5 text-xs text-muted sm:text-sm">
-                    Prepared for future Cloudinary showreel video &amp; poster URL
+                    {showreelVideoUrl
+                      ? 'Showreel video configured — click to play'
+                      : 'Configure Showreel Video URL in Admin Settings'}
                   </span>
                 </div>
               )}
 
-              {/* Subtle Vignette */}
               <div
                 aria-hidden="true"
                 className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/30"
               />
 
-              {/* Centered Play Button */}
               <span className="absolute inset-0 flex items-center justify-center">
                 <span className="btn-accent-glow flex h-16 w-16 items-center justify-center rounded-full border border-accent-bright/45 text-white transition-transform duration-300 group-hover:scale-110 sm:h-20 sm:w-20">
                   <Play size={26} className="ml-1 fill-current" />
                 </span>
               </span>
 
-              {/* Bottom Bar Info */}
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-between px-5 py-4 sm:px-7">
                 <span className="font-mono-label text-[11px] uppercase tracking-[0.18em] text-ink/90">
-                  Click to preview showreel modal
+                  {showreelVideoUrl
+                    ? 'Watch Showreel'
+                    : 'Click to preview showreel modal'}
                 </span>
                 <span className="rounded-full border border-accent/40 bg-black/75 px-3 py-1 font-mono-label text-[10px] uppercase tracking-wider text-accent-bright">
-                  {SHOWREEL_DATA.durationLabel}
+                  {showreelVideoUrl ? 'HD Showreel' : SHOWREEL_DATA.durationLabel}
                 </span>
               </div>
             </button>
@@ -214,14 +249,14 @@ const Home = () => {
       </section>
 
       {/* SECTION D: SELECTED REAL PROJECTS */}
-      <section className="border-t border-border/50 bg-[#0d0d0d] py-20 sm:py-28">
+      <section className="overflow-x-clip border-t border-border/50 bg-[#0d0d0d] py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <MotionReveal>
             <SectionHeader
               eyebrow="Selected Work"
               title="REAL"
               highlightedText="PROJECTS."
-              subtitle="Temporary placeholder showcase structured for Ronak’s upcoming Cloudinary video portfolio."
+              subtitle="Featured portfolio edits managed dynamically from the studio dashboard."
               action={
                 <Button to="/projects" variant="secondary">
                   <span>View All Projects</span>
@@ -231,16 +266,27 @@ const Home = () => {
             />
           </MotionReveal>
 
-          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
-            {featuredProjects.map((project, index) => (
-              <MotionReveal key={project.id} delay={index * 0.06}>
-                <ProjectCard
-                  project={project}
-                  onPreview={(selected) => setActiveVideoItem(selected)}
-                />
-              </MotionReveal>
-            ))}
-          </div>
+          {isLoadingProjects ? (
+            <div className="mt-12 flex min-h-[220px] items-center justify-center">
+              <Loader2 size={28} className="animate-spin text-accent-bright" />
+            </div>
+          ) : featuredProjects.length > 0 ? (
+            <ProjectCarousel3D
+              projects={featuredProjects}
+              onPreview={openProjectModal}
+            />
+          ) : (
+            <div className="surface-card mt-12 rounded-2xl p-10 text-center">
+              <Film size={28} className="mx-auto mb-3 text-accent-bright/70" />
+              <p className="font-display text-2xl font-bold uppercase text-ink">
+                No Featured Projects Published Yet
+              </p>
+              <p className="mt-2 text-sm text-muted">
+                Publish and feature projects in the Admin Panel to showcase them
+                here.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -293,7 +339,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Video Preview Modal */}
       <VideoPreviewModal
         isOpen={Boolean(activeVideoItem)}
         onClose={() => setActiveVideoItem(null)}

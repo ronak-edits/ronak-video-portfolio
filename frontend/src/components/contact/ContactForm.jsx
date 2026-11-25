@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react';
 import { SERVICES_DATA } from '../../data/servicesData';
+import {
+  fetchPublicServices,
+  submitPublicEnquiry,
+} from '../../services/portfolioService';
 
 const INITIAL_FORM_STATE = {
   fullName: '',
@@ -12,18 +16,16 @@ const INITIAL_FORM_STATE = {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/**
- * Reusable Contact Form component.
- * In Phase 2, validates fields and simulates submission states locally.
- * Ready to accept an async API handler in Phase 3.
- */
 const ContactForm = ({ initialProjectType = '' }) => {
   const [formData, setFormData] = useState({
     ...INITIAL_FORM_STATE,
     projectType: initialProjectType,
   });
+  const [serviceOptions, setServiceOptions] = useState(
+    SERVICES_DATA.map((s) => s.title)
+  );
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+  const [status, setStatus] = useState('idle');
   const [feedbackMessage, setFeedbackMessage] = useState('');
 
   useEffect(() => {
@@ -31,6 +33,20 @@ const ContactForm = ({ initialProjectType = '' }) => {
       setFormData((prev) => ({ ...prev, projectType: initialProjectType }));
     }
   }, [initialProjectType]);
+
+  useEffect(() => {
+    let active = true;
+    fetchPublicServices()
+      .then((services) => {
+        if (active && services.length > 0) {
+          setServiceOptions(services.map((s) => s.title));
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const validate = () => {
     const nextErrors = {};
@@ -84,15 +100,28 @@ const ContactForm = ({ initialProjectType = '' }) => {
     setStatus('loading');
     setFeedbackMessage('');
 
-    // Phase 2 UI simulation only (backend API integration happens in Phase 3)
-    await new Promise((resolve) => setTimeout(resolve, 700));
+    try {
+      const response = await submitPublicEnquiry({
+        fullName: formData.fullName.trim(),
+        email: formData.email.trim(),
+        projectType: formData.projectType.trim(),
+        budget: formData.budget.trim(),
+        message: formData.message.trim(),
+      });
 
-    setStatus('success');
-    setFeedbackMessage(
-      'Preview submission validated! Backend enquiry delivery will be connected in Phase 3.'
-    );
-    setFormData(INITIAL_FORM_STATE);
-    setErrors({});
+      setStatus('success');
+      setFeedbackMessage(
+        response?.message ||
+          'Thank you! Your enquiry has been sent successfully.'
+      );
+      setFormData(INITIAL_FORM_STATE);
+      setErrors({});
+    } catch (err) {
+      setStatus('error');
+      setFeedbackMessage(
+        err.message || 'Unable to send enquiry. Please try again.'
+      );
+    }
   };
 
   const inputBaseClasses =
@@ -100,18 +129,16 @@ const ContactForm = ({ initialProjectType = '' }) => {
 
   return (
     <div className="relative rounded-3xl bg-paper p-6 text-slate-900 shadow-[0_24px_60px_-15px_rgba(178,7,16,0.34)] sm:p-8 lg:p-10">
-      {/* Accent Ribbon */}
       <div className="mb-6 flex items-center justify-between gap-3">
         <span className="font-mono-label text-[11px] font-semibold uppercase tracking-[0.2em] text-accent-deep">
           Project Brief
         </span>
         <span className="-rotate-2 rounded-md bg-accent-deep px-3 py-1 font-mono-label text-[10px] font-semibold uppercase tracking-[0.15em] text-white shadow-sm">
-          Phase 2 UI Ready
+          Direct Enquiry
         </span>
       </div>
 
       <form onSubmit={handleSubmit} noValidate className="space-y-5">
-        {/* Full Name */}
         <div>
           <label
             htmlFor="fullName"
@@ -138,7 +165,6 @@ const ContactForm = ({ initialProjectType = '' }) => {
           )}
         </div>
 
-        {/* Email */}
         <div>
           <label
             htmlFor="email"
@@ -165,7 +191,6 @@ const ContactForm = ({ initialProjectType = '' }) => {
           )}
         </div>
 
-        {/* Project Type + Budget */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div>
             <label
@@ -185,9 +210,9 @@ const ContactForm = ({ initialProjectType = '' }) => {
               }`}
             >
               <option value="">Select a service...</option>
-              {SERVICES_DATA.map((service) => (
-                <option key={service.id} value={service.title}>
-                  {service.title}
+              {serviceOptions.map((title) => (
+                <option key={title} value={title}>
+                  {title}
                 </option>
               ))}
               <option value="Other / Custom Project">Other / Custom Project</option>
@@ -218,7 +243,6 @@ const ContactForm = ({ initialProjectType = '' }) => {
           </div>
         </div>
 
-        {/* Message */}
         <div>
           <label
             htmlFor="message"
@@ -245,7 +269,6 @@ const ContactForm = ({ initialProjectType = '' }) => {
           )}
         </div>
 
-        {/* Status Alert */}
         {status === 'success' && (
           <div
             role="status"
@@ -266,7 +289,6 @@ const ContactForm = ({ initialProjectType = '' }) => {
           </div>
         )}
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={status === 'loading'}
@@ -284,11 +306,6 @@ const ContactForm = ({ initialProjectType = '' }) => {
             </>
           )}
         </button>
-
-        <p className="text-center text-xs text-slate-600">
-          Form UI preview — Phase 3 will connect submissions directly to the
-          backend API.
-        </p>
       </form>
     </div>
   );

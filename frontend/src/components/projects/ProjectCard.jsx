@@ -1,6 +1,14 @@
 import { Film, Play } from 'lucide-react';
 
 const ProjectCard = ({ project, onPreview }) => {
+  const categoryName =
+    typeof project.category === 'object'
+      ? project.category?.name
+      : project.category;
+  const description = project.shortDescription || project.description || '';
+  const clientLabel = project.clientName || project.clientLabel || '';
+  const duration = project.videoDuration || project.duration || '';
+
   return (
     <article className="surface-card surface-card-hover group flex flex-col overflow-hidden rounded-2xl">
       {/* Thumbnail / Video Preview Trigger */}
@@ -24,7 +32,7 @@ const ProjectCard = ({ project, onPreview }) => {
               className="mb-2 text-accent-bright/70 transition-transform duration-300 group-hover:scale-110"
             />
             <span className="font-mono-label text-[10px] uppercase tracking-[0.2em] text-muted">
-              {project.aspectRatio || '16:9'} Video Placeholder
+              {project.aspectRatio || '16:9'} Video Preview
             </span>
           </div>
         )}
@@ -43,9 +51,9 @@ const ProjectCard = ({ project, onPreview }) => {
         </span>
 
         {/* Top-Right Duration Badge */}
-        {project.duration && (
+        {duration && (
           <span className="absolute right-3 top-3 rounded-full border border-accent/40 bg-black/75 px-2.5 py-0.5 font-mono-label text-[10px] tracking-wider text-ink backdrop-blur-sm">
-            {project.duration}
+            {duration}
           </span>
         )}
       </button>
@@ -54,11 +62,11 @@ const ProjectCard = ({ project, onPreview }) => {
       <div className="flex flex-1 flex-col justify-between p-5 sm:p-6">
         <div>
           <div className="mb-2 flex flex-wrap items-center gap-2 font-mono-label text-[11px] uppercase tracking-[0.16em] text-accent-bright">
-            <span>{project.category}</span>
-            {project.clientLabel && (
+            <span>{categoryName || 'Video Edit'}</span>
+            {clientLabel && (
               <>
                 <span className="text-muted/50">•</span>
-                <span className="text-muted">{project.clientLabel}</span>
+                <span className="text-muted">{clientLabel}</span>
               </>
             )}
           </div>
@@ -68,7 +76,7 @@ const ProjectCard = ({ project, onPreview }) => {
           </h3>
 
           <p className="mt-2 text-sm leading-relaxed text-muted">
-            {project.description}
+            {description}
           </p>
         </div>
 

@@ -24,6 +24,10 @@ export const errorHandler = (err, _req, res, _next) => {
     statusCode = 400;
     message = 'Validation failed';
     errors = Object.values(err.errors).map((e) => e.message);
+  } else if (err.code === 11000) {
+    statusCode = 409;
+    const duplicateField = Object.keys(err.keyPattern || {})[0] || 'record';
+    message = `A record with this ${duplicateField} already exists.`;
   }
 
   res.status(statusCode).json({

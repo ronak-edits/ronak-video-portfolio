@@ -2,10 +2,27 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUp, ExternalLink, Mail, ShieldCheck, X } from 'lucide-react';
 import { BRAND, CONTACT_PLACEHOLDERS, NAV_LINKS } from '../utils/constants';
+import { useSiteSettings } from '../context/SiteContext';
 
 const Footer = () => {
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const { settings } = useSiteSettings();
   const currentYear = new Date().getFullYear();
+
+  const email = settings?.contactEmail || CONTACT_PLACEHOLDERS.email;
+  const location = settings?.location || CONTACT_PLACEHOLDERS.location;
+  const copyrightText =
+    settings?.copyrightText ||
+    `© ${currentYear} ${BRAND.name}. All rights reserved.`;
+
+  const dynamicSocials = [
+    settings?.youtubeUrl && { label: 'YouTube', href: settings.youtubeUrl },
+    settings?.instagramUrl && { label: 'Instagram', href: settings.instagramUrl },
+    settings?.linkedinUrl && { label: 'LinkedIn', href: settings.linkedinUrl },
+  ].filter(Boolean);
+
+  const socials =
+    dynamicSocials.length > 0 ? dynamicSocials : CONTACT_PLACEHOLDERS.socials;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -16,7 +33,6 @@ const Footer = () => {
       <footer className="border-t border-accent/20 bg-[#060606] text-sm text-muted">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Brand & Description */}
             <div className="space-y-4">
               <Link
                 to="/"
@@ -34,7 +50,6 @@ const Footer = () => {
               </p>
             </div>
 
-            {/* Quick Navigation */}
             <div>
               <h3 className="mb-4 font-mono-label text-xs uppercase tracking-[0.2em] text-ink">
                 Navigation
@@ -53,7 +68,6 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Contact Placeholder */}
             <div>
               <h3 className="mb-4 font-mono-label text-xs uppercase tracking-[0.2em] text-ink">
                 Direct Contact
@@ -61,30 +75,35 @@ const Footer = () => {
               <ul className="space-y-3">
                 <li>
                   <a
-                    href={`mailto:${CONTACT_PLACEHOLDERS.email}`}
+                    href={`mailto:${email}`}
                     className="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent-bright"
                   >
                     <Mail size={15} className="shrink-0 text-accent-bright" />
-                    <span className="break-all">{CONTACT_PLACEHOLDERS.email}</span>
+                    <span className="break-all">{email}</span>
                   </a>
                 </li>
-                <li className="text-xs text-muted/80">
-                  {CONTACT_PLACEHOLDERS.location}
-                </li>
+                <li className="text-xs text-muted/80">{location}</li>
               </ul>
             </div>
 
-            {/* Social Placeholders & Back to Top */}
             <div className="flex flex-col justify-between gap-6">
               <div>
                 <h3 className="mb-4 font-mono-label text-xs uppercase tracking-[0.2em] text-ink">
-                  Socials (Placeholders)
+                  Socials
                 </h3>
                 <ul className="space-y-2.5">
-                  {CONTACT_PLACEHOLDERS.socials.map((social) => (
+                  {socials.map((social) => (
                     <li key={social.label}>
                       <a
                         href={social.href}
+                        target={
+                          social.href.startsWith('http') ? '_blank' : undefined
+                        }
+                        rel={
+                          social.href.startsWith('http')
+                            ? 'noreferrer'
+                            : undefined
+                        }
                         className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-accent-bright"
                       >
                         <ExternalLink size={13} className="shrink-0" />
@@ -97,12 +116,9 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Bottom Bar */}
           <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-border/60 pt-6 sm:flex-row sm:items-center">
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted">
-              <span>
-                &copy; {currentYear} {BRAND.name}. All rights reserved.
-              </span>
+              <span>{copyrightText}</span>
               <button
                 type="button"
                 onClick={() => setIsPrivacyOpen(true)}
@@ -125,7 +141,6 @@ const Footer = () => {
         </div>
       </footer>
 
-      {/* Lightweight Privacy Policy Placeholder Modal */}
       {isPrivacyOpen && (
         <div
           role="dialog"
@@ -142,7 +157,7 @@ const Footer = () => {
               <div className="inline-flex items-center gap-2 text-accent-bright">
                 <ShieldCheck size={18} />
                 <span className="font-mono-label text-xs uppercase tracking-[0.18em]">
-                  Legal Placeholder
+                  Privacy Notice
                 </span>
               </div>
               <button
@@ -158,12 +173,12 @@ const Footer = () => {
               id="privacy-modal-title"
               className="font-display text-2xl font-bold uppercase text-ink"
             >
-              Privacy Policy (Placeholder)
+              Privacy Policy
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-muted">
-              This is a Phase 2 privacy notice placeholder for Ronak&apos;s
-              portfolio website. Contact form data handling and privacy terms
-              will be finalized alongside backend API integration in Phase 3.
+              Contact details submitted through this portfolio&apos;s enquiry
+              form are stored securely to respond to project requests and are
+              never shared with third parties.
             </p>
           </div>
         </div>
